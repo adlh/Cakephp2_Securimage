@@ -7,16 +7,16 @@ App::import( 'Vendor', 'Securimage', array( 'file' => 'securimage' . DS . 'secur
 /**
  * Define path to library
  */
-define( 'SECURIMAGE_VENDOR_DIR', APP . 'vendors' . DS . 'securimage/' );
+define( 'SECURIMAGE_VENDOR_DIR', APP . 'Vendor' . DS . 'securimage/' );
 
 /**
  * Project:     Securimage Captcha Component<br />
  * File:        securimage.php<br />
- * 
+ *
  * Coded to be compatible with the Configuration Options of<br />
  * SecurImage Library v2.0.2 available from http://www.phpcaptcha.org or<br />
  * The SecurImage GitHub Respository at https://github.com/dapphp/securimage<br />
- * 
+ *
  * @link http://chaos-laboratory.com/projects/cakephp-securimage-component/ Securimage Captcha Component homepage
  * @link https://github.com/sourjya/cakephp-securimage/ Securimage Captcha Component repository on GitHub
  * @author Sourjya Sankar Sen <sourjya@chaos-laboratory.com>
@@ -27,7 +27,7 @@ class SecurimageComponent extends Object {
 
     /**
      * Controller reference
-     * @var object 
+     * @var object
      */
     var $controller = null;
     /**
@@ -47,7 +47,7 @@ class SecurimageComponent extends Object {
     var $image_width = 350;
     /**
      * The background color for the image as a hexadecmial value (prepended by a '#')
-     * @var string 
+     * @var string
      */
     var $image_bg_color = '#ffffff';
     /**
@@ -66,7 +66,7 @@ class SecurimageComponent extends Object {
      * Color of lines drawn over text as a hexadecmial value (prepended by a '#')<br />
      * Ignored if $draw_lines_over_text is set to false
      * @see $draw_lines_over_text
-     * @var string 
+     * @var string
      */
     var $line_color = '#cccccc';
     /**
@@ -79,7 +79,7 @@ class SecurimageComponent extends Object {
      * Color to use for writing signature text<br />
      * Ignored if $image_signature is set to null
      * @see $image_signature
-     * @var string 
+     * @var string
      */
     var $signature_color = '#000000';
     /**
@@ -149,7 +149,7 @@ class SecurimageComponent extends Object {
      * How much to distort image, higher = more distortion<br />
      * Distortion is only available when using TTF fonts i.e.<br />
      * when $use_gd_font is set to false
-     * @var float 
+     * @var float
      * @see $use_gd_font
      */
     var $perturbation = 0;
@@ -203,18 +203,18 @@ class SecurimageComponent extends Object {
     var $audio_format = 'mp3';
     /**
      * The session name to use (blank for default)
-     * @var string 
+     * @var string
      */
-    var $session_name = ''; // 
+    var $session_name = ''; //
     /**
      * The amount of time in seconds that a code remains valid<br />
      * Any non-numeric or value less than 1 disables this functionality
-     * @var int 
+     * @var int
      */
     var $expiry_time = -1;
     /**
      * Use an SQLite database for storing codes as a backup to sessions
-     * @var bool 
+     * @var bool
      */
     var $use_sqlite_db = false;
     /**
@@ -233,25 +233,25 @@ class SecurimageComponent extends Object {
     /**
      * Initializes the Component
      * @param object $controller
-     * @param array $settings 
+     * @param array $settings
      * @access public
      */
     public function initialize( &$controller, $settings = array( ) ) {
-        // Saving the controller reference for later use 
+        // Saving the controller reference for later use
         $this->controller = &$controller;
         // Instantiate SecurImage class and store a reference
-        $this->controller->Securimage = & new securimage();
+        $this->controller->Securimage = & new Securimage();
         // Set Configuration options for Component
         $this->_set( $settings );
         // Set the same for SecurImage
-        // This second step is required as certain parameters need to be transformed to 
+        // This second step is required as certain parameters need to be transformed to
         // native SecurImage formats
         $this->_setVendorConfigOptions( $settings );
     }
 
     /**
-     * 
-     * @param object $controller 
+     *
+     * @param object $controller
      * @access public
      */
     public function startup( &$controller ) {
@@ -264,11 +264,11 @@ class SecurimageComponent extends Object {
 
     /**
      *
-     * @param object $controller 
+     * @param object $controller
      * @access public
      */
     public function shutdown( &$controller ) {
-        
+
     }
 
     /** ==============================================================
@@ -277,10 +277,10 @@ class SecurimageComponent extends Object {
 
     /**
      * Sets configuration options for Securimage class
-     * 
+     *
      * @param array $settings
      * @access private
-     * @return type 
+     * @return type
      */
     private function _setVendorConfigOptions( $settings = array( ) ) {
         if( empty( $settings ) )
@@ -345,7 +345,7 @@ class SecurimageComponent extends Object {
     /**
      * Display the Captcha Image
      * @access private
-     * @param object $controller 
+     * @param object $controller
      */
     private function _generateCaptcha() {
         // A blank layout
@@ -358,8 +358,8 @@ class SecurimageComponent extends Object {
      * Converts a comma delimited string of hexadecmial color codes to<br />
      * an array of native Securimage_Color objects
      * @access private
-     * @param string $bgColors 
-     * @return Securimage_Color 
+     * @param string $bgColors
+     * @return Securimage_Color
      */
     private function _toBgColors( $bgColors = null ) {
         if( !$bgColors )
