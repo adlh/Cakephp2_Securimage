@@ -23,128 +23,127 @@ define( 'SECURIMAGE_VENDOR_DIR', APP . 'Vendor' . DS . 'securimage/' );
  * @license MIT
  * @version 0.5
  */
-class SecurimageComponent extends Object {
 
-    /**
-     * Controller reference
-     * @var object
-     */
-    var $controller = null;
+App::uses('Component', 'Controller');
+
+class SecurimageComponent extends Component {
+
+    protected $controller = null;
     /**
      * Type of image to be generated (jpg, gif or png)
      * @var string
      */
-    var $image_type = 'jpg';
+    public $image_type = 'jpg';
     /**
      * Height of the Captcha image
      * @var int
      */
-    var $image_height = 75;
+    public $image_height = 75;
     /**
      * Width of the captcha image
      * @var int
      */
-    var $image_width = 350;
+    public $image_width = 350;
     /**
      * The background color for the image as a hexadecmial value (prepended by a '#')
      * @var string
      */
-    var $image_bg_color = '#ffffff';
+    public $image_bg_color = '#ffffff';
     /**
      * Whether to draw the lines over the text
      * @var bool
      */
-    var $draw_lines_over_text = false;
+    public $draw_lines_over_text = false;
     /**
      * Number of vertical and horizontal lines to draw on the image<br />
      * Ignored if $draw_lines_over_text is set to false
      * @see $draw_lines_over_text
      * @var int
      */
-    var $num_lines = 6;
+    public $num_lines = 6;
     /**
      * Color of lines drawn over text as a hexadecmial value (prepended by a '#')<br />
      * Ignored if $draw_lines_over_text is set to false
      * @see $draw_lines_over_text
      * @var string
      */
-    var $line_color = '#cccccc';
+    public $line_color = '#cccccc';
     /**
      * Text to write at the bottom corner of captcha image<br />
      * No signature is drawn if this parameter is not set
      * @var string
      */
-    var $image_signature = null;
+    public $image_signature = null;
     /**
      * Color to use for writing signature text<br />
      * Ignored if $image_signature is set to null
      * @see $image_signature
      * @var string
      */
-    var $signature_color = '#000000';
+    public $signature_color = '#000000';
     /**
      * Absolute path to the directory containing background images<br />
      * A random one is picked everytime. GIF, JPG or PNG files only<br />
      * No background images are used if this parameter is not set
      * @var string
      */
-    var $background_directory = null;
+    public $background_directory = null;
     /**
      * Whether to use a gd font instead of a ttf font
      * @var bool
      */
-    var $use_gd_font = false;
+    public $use_gd_font = false;
     /**
      * Path to GD font file<br />
      * relative to SecurImage library folder under vendors<br />
      * Used only if $use_gd_font is set to true
      * @var string
      */
-    var $gd_font_file = null;
+    public $gd_font_file = null;
     /**
      * The approxiate size of the font in pixels<br />
      * Used only if $use_gd_font is set to true
      * @see $use_gd_font
      * @var int
      */
-    var $gd_font_size = 50;
+    public $gd_font_size = 50;
     /**
      * The path to the ttf font file to load<br />
      * relative to SecurImage library folder in vendors
      * @var string
      */
-    var $ttf_file = 'fonts/AHGBold.ttf';
+    public $ttf_file = 'fonts/AHGBold.ttf';
     /**
      * The color of the text as a hexadecmial value (prepended by a '#')<br />
      * Ignored if $use_multi_text set to true
      * @see $use_multi_text
      * @var string
      */
-    var $text_color = '#000000';
+    public $text_color = '#000000';
     /**
      * Whether to use multiple colors for each character
      * @var bool
      */
-    var $use_multi_text = false;
+    public $use_multi_text = false;
     /**
      * Comma separated list of colors as hexadecmial values (prepended by '#'-es)<br />
      * Used only if $use_multi_text is set to true
      * @see $use_multi_text
      * @var string
      */
-    var $multi_text_color = '#E36B63,#B78D89,#3A9E67,#A7878D,#B78D89,#F3705E,#8B47FD,#2D985D,#9A4CF9';
+    public $multi_text_color = '#E36B63,#B78D89,#3A9E67,#A7878D,#B78D89,#F3705E,#8B47FD,#2D985D,#9A4CF9';
     /**
      * Whether to make characters appear transparent
      * @var bool
      */
-    var $use_transparent_text = true;
+    public $use_transparent_text = true;
     /**
      * The percentage of transparency, 0 to 100<br />
      * Works only if $use_transparent_text is set to true
      * @var int
      * @see $use_transparent_text
      */
-    var $text_transparency_percentage = 45;
+    public $text_transparency_percentage = 45;
     /**
      * How much to distort image, higher = more distortion<br />
      * Distortion is only available when using TTF fonts i.e.<br />
@@ -152,36 +151,36 @@ class SecurimageComponent extends Object {
      * @var float
      * @see $use_gd_font
      */
-    var $perturbation = 0;
+    public $perturbation = 0;
     /**
      * Maximum angle of text in degrees
      * @var int
      */
-    var $text_angle_maximum = 21;
+    public $text_angle_maximum = 21;
     /**
      * Minimum angle of text in degrees
      * @var int
      */
-    var $text_angle_minimum = -21;
+    public $text_angle_minimum = -21;
     /**
      * The character set used for generating Captcha codes in the image<br />
      * Used only if $use_wordlist is set to false
      * @see $use_wordlist
      * @var string
      */
-    var $charset = 'ABCDEFGHKLMNPRSTUVWYZ23456789';
+    public $charset = 'ABCDEFGHKLMNPRSTUVWYZ23456789';
     /**
      * The length of the code to generate<br />
      * Used only if $use_wordlist is set to false
      * @see $use_wordlist
      * @var int
      */
-    var $code_length = 5;
+    public $code_length = 5;
     /**
      * Use wordlist instead of random codes
      * @var bool
      */
-    var $use_wordlist = false;
+    public $use_wordlist = false;
     /**
      * Generate codes using words in this file<br />
      * relative to SecurImage library folder under vendors<br />
@@ -189,34 +188,34 @@ class SecurimageComponent extends Object {
      * @see $use_wordlist
      * @var string
      */
-    var $wordlist_file = 'words/words.txt';
+    public $wordlist_file = 'words/words.txt';
     /**
      * Path to the WAV files to use for the audio playback of Captcha text, include trailing /<br />
      * relative to SecurImage library folder in vendors
      * @var string
      */
-    var $audio_path = 'audio/';
+    public $audio_path = 'audio/';
     /**
      * Type of audio file to generate (mp3 or wav)
      * @var string
      */
-    var $audio_format = 'mp3';
+    public $audio_format = 'mp3';
     /**
      * The session name to use (blank for default)
      * @var string
      */
-    var $session_name = ''; //
+    public $session_name = ''; //
     /**
      * The amount of time in seconds that a code remains valid<br />
      * Any non-numeric or value less than 1 disables this functionality
      * @var int
      */
-    var $expiry_time = -1;
+    public $expiry_time = -1;
     /**
      * Use an SQLite database for storing codes as a backup to sessions
      * @var bool
      */
-    var $use_sqlite_db = false;
+    public $use_sqlite_db = false;
     /**
      * Absolute path to SQLite database for storing codes as a backup to sessions<br />
      * For Security reasons, put this file in a directory below the web root or one that is restricted
@@ -224,7 +223,7 @@ class SecurimageComponent extends Object {
      * @see $use_sqlite_db
      * @var string
      */
-    var $sqlite_database = null;
+    public $sqlite_database = null;
 
     /** ==============================================================
      * 				Public
