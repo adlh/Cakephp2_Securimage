@@ -156,7 +156,7 @@ In your view file the CAPTCHA image can be displayed in the following manner:
 
 ```html
     <div id="captcha_container">
-        <img id="captcha_img" src="/contacts/securimage/0" alt="CAPTCHA image" />
+        <img id="captcha_img" src="/contact/securimage/0" alt="CAPTCHA image" />
         <img id="captcha_reload" src="/img/icon-reload.png" title="Refresh" />
         <input id="captcha_text" name="data[Contact][captcha_text]" value="" />
     </div>
@@ -170,7 +170,7 @@ image dynamically.
     // Using jQuery
     $('#captcha_reload').click( function() {
         // Append random number to prevent caching
-        $('#captcha_img').attr('src', '/contacts/securimage/' + Math.random());
+        $('#captcha_img').attr('src', '/contact/securimage/' + Math.random());
         $('#captcha_text').val('');
     });
 ```
