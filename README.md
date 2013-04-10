@@ -1,16 +1,17 @@
 Description
 
 This project was forked from:
-http://chaos-laboratory.com/cakephp-securimage-component/ 
+https://github.com/sourjya/cakephp-securimage
 to add support for CakePHP 2.x
 
-All credits go to the original author.
+All credits go to the original authors of securimage and the author of this
+CakePHP component.
 
 The url to the original project is:
 http://chaos-laboratory.com/projects/cakephp-securimage-component/
 
-This is a slightly modified version of the docs, to mirror the changes to use
-with CakePHP 2.x:
+This is a slightly modified version of the docs found on the url above, to
+mirror the changes for using with CakePHP 2.x:
 
 INSTALLATION:
 
@@ -22,9 +23,8 @@ be fairly evident to you.
 
 The zip file contains:
 
-    A component file that should be placed in Controller/Components folder of
-    your application, and A view file, that is to be placed in View/Elements
-    folder.
+A component file that should be placed in Controller/Components folder of your
+application, and A view file, that is to be placed in View/Elements folder.
 
 If effect, the folder structure should be as follows:
 
@@ -85,9 +85,72 @@ class ContactsController extends AppController {
 }
 ```
 
-Note: For a full list of available parameters (configuration options) please
-take a look into the component file. Details of each option are included in it
-in PHP Doc format. 
+    Note: For a full list of available parameters (configuration options) please
+    take a look into the component file. Details of each option are included in it
+    in PHP Doc format. 
+
+
+
+Example if using this Component inside a plugin, e.g. 'MyPlugin':
+
+```php
+class ContactsController extends MyPluginAppController {
+
+    // Components
+    public $components = array(
+        'MyPlugin.Securimage',
+    );
+
+}
+```
+
+Also, if using this Component inside a plugin, then the Component should be
+adjusted to use the controller and paths inside the plugin. The diff would look
+something like this:
+
+```diff
+--- Controller/Component/SecurimageComponent.php
++++ Plugin/MyPlugin/Controller/Component/SecurimageComponent.php
+@@ -3,11 +3,11 @@
+/**
+* Import SecurImage library
+*/
+-App::import( 'Vendor', 'Securimage', array( 'file' => 'securimage' . DS . 'securimage.php' ) );
++require_once(APP . 'Plugin' . DS . 'MyPlugin' . DS . 'Vendor' . DS . 'securimage' . DS . 'securimage.php');
+/**
+* Define path to library
+*/
+-define( 'SECURIMAGE_VENDOR_DIR', APP . 'Vendor' . DS . 'securimage/' );
++define( 'SECURIMAGE_VENDOR_DIR', APP . 'Plugin' . DS . 'MyPlugin' . DS . 'Vendor' . DS . 'securimage/' );
+
+/**
+* Project:     Securimage Captcha Component<br />
+@@ -24,7 +24,7 @@
+* @version 0.5
+*/
+
+-App::uses('Component', 'Controller');
++App::uses('Component', 'MyPlugin.Controller');
+
+class SecurimageComponent extends Component {
+```
+
+It is important to add the new route to the securimage action of the
+controller. This would look something like this:
+
+```php
+// Config/routes.php
+
+CroogoRouter::connect('/contact/securimage/*', array('controller' => 'contact', 'action' => 'securimage'));
+
+```
+... or if using inside a plugin:
+
+```php
+// Plugin/MyPlugin/Config/routes.php
+CroogoRouter::connect('/contact/securimage/*', array('plugin' => 'my_plugin', 'controller' => 'contact', 'action' => 'securimage'));
+
+```
 
 In your view file the CAPTCHA image can be displayed in the following manner:
 
