@@ -181,7 +181,7 @@ For the validation, you can add the 'captcha_code' field to the form's Model (in
 case I'm using a model within my plugin without a table to handle the validation):
 
 ```php
-\\ Plugin/MyPlugin/Model/ContactForm.php
+// Plugin/MyPlugin/Model/ContactForm.php
 
 App::uses('MyPluginAppModel', 'MyPlugin.Model');
 /**
