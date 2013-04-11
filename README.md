@@ -96,7 +96,7 @@ class ContactController extends RuetzAppController {
 ```
 
     Note: For a full list of available parameters (configuration options)
-    please take a look into the securimage.php file.
+    please take a look into the Vendor/securimage/securimage.php file.
     
 
 
@@ -154,7 +154,9 @@ CroogoRouter::connect('/contact/securimage/*', array('controller' => 'contact', 
 
 ```php
 // Plugin/MyPlugin/Config/routes.php
-CroogoRouter::connect('/contact/securimage/*', array('plugin' => 'my_plugin', 'controller' => 'contact', 'action' => 'securimage'));
+
+CroogoRouter::connect('/contact/securimage/*', array('plugin' => 'my_plugin', 'controller' => 'contact', 
+    'action' => 'securimage'));
 
 ```
 
