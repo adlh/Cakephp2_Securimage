@@ -66,9 +66,26 @@ class ContactsController extends AppController {
 }
 ```
 
-Example with parameters:
+Example if using this Component inside a plugin, e.g. 'MyPlugin':
 
 ```php
+App::uses('MyPluginAppController', 'MyPlugin.Controller');
+
+class ContactsController extends MyPluginAppController {
+
+    // Components
+    public $components = array(
+        'MyPlugin.Securimage',
+    );
+
+}
+```
+
+The same example but with parameters:
+
+```php
+App::uses('MyPluginAppController', 'MyPlugin.Controller');
+
 /**
  * Import SecurImage library to be able to use class constants like:
  *     Securimage::SI_CAPTCHA_MATHEMATIC
@@ -76,9 +93,7 @@ Example with parameters:
 require_once(APP . 'Plugin' . DS . 'MyPlugin' . DS . 'Vendor' . DS . 
     'securimage' . DS . 'securimage.php');
 
-App::uses('RuetzAppController', 'Ruetz.Controller');
-
-class ContactController extends RuetzAppController {
+class ContactController extends MyPluginAppController {
 
     // Components
     public $components = array(
@@ -98,21 +113,6 @@ class ContactController extends RuetzAppController {
     Note: For a full list of available parameters (configuration options)
     please take a look into the Vendor/securimage/securimage.php file.
     
-
-
-
-Example if using this Component inside a plugin, e.g. 'MyPlugin':
-
-```php
-class ContactsController extends MyPluginAppController {
-
-    // Components
-    public $components = array(
-        'MyPlugin.Securimage',
-    );
-
-}
-```
 
 Also, if using this Component inside a plugin, then the Component should be
 adjusted to use the controller and paths inside the plugin. The diff would look
