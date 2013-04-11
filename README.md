@@ -13,7 +13,7 @@ http://chaos-laboratory.com/projects/cakephp-securimage-component/
 This is a modified version of the docs found on the url above, to
 mirror the changes for using with CakePHP 2.x.
 
-Some major changes is the removal of all option-handling from the component
+Some major changes are the removal of all option-handling from the component
 and the ability to override these through the $options array passed within the
 components declaration in the controller. Please refer to the USAGE section for
 more details. Also, there are some examples of how to integrate validation within
