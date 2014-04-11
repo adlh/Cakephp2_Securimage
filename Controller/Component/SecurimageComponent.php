@@ -51,11 +51,8 @@ class SecurimageComponent extends Component {
      * @param object $controller
      * @access public
      */
-    public function initialize(&$controller) {
-        // Saving the controller reference for later use
-        $this->controller = &$controller;
-        // Instantiate SecurImage class and store a reference
-        $this->controller->Securimage = & new Securimage($this->options);
+    public function initialize(Controller $controller) {
+        $controller->Securimage = new Securimage($this->options);
     }
 
     /**
@@ -63,11 +60,11 @@ class SecurimageComponent extends Component {
      * @param object $controller
      * @access public
      */
-    public function startup(&$controller) {
-        $this->controller->set('securimage', $controller->Securimage);
+    public function startup(Controller $controller) {
+        $controller->set('securimage', $controller->Securimage);
         // Generate Captcha
-        if($this->controller->params['action'] == 'securimage')
-            $this->_generateCaptcha();
+        if($controller->params['action'] == 'securimage')
+            $this->_generateCaptcha($controller);
     }
 
     /**
@@ -75,18 +72,18 @@ class SecurimageComponent extends Component {
      * @param object $controller
      * @access public
      */
-    public function shutdown(&$controller) {}
+    public function shutdown(Controller $controller) {}
 
     /**
      * Display the Captcha Image
      * @access private
      * @param object $controller
      */
-    private function _generateCaptcha() {
+    private function _generateCaptcha(Controller $controller) {
         // A blank layout
-        $this->controller->autoLayout = false;
+        $controller->autoLayout = false;
         // Create an image and store it in a viewVar
-        $this->controller->set('captcha_data',
-            $this->controller->Securimage->show());
+        $controller->set('captcha_data',
+            $controller->Securimage->show());
     }
 }
